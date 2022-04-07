@@ -62,7 +62,6 @@ contract NFT is ERC721URIStorage, Ownable {
   /// @param _tokenId NFT tokenId
   /// @param _price bid price
   function createMarketItem(uint _tokenId, uint256 _price) public {
-    console.log("NFT owner:", ownerOf(_tokenId));
     require(ownerOf(_tokenId) == msg.sender, "Only owner of NFT can create sale");
     
     marketItems[_tokenId] = MarketItem(
@@ -71,7 +70,10 @@ contract NFT is ERC721URIStorage, Ownable {
       true
     );
 
-    IERC721(address(this)).safeTransferFrom(msg.sender, address(this), _tokenId);
+    // This is required for contract when transferring NFT to any address
+    setApprovalForAll(address(this), true);
+
+    IERC721(address(this)).transferFrom(msg.sender, address(this), _tokenId);
 
     emit MarketItemCreated(_tokenId, msg.sender, _price);
   }
@@ -101,4 +103,6 @@ contract NFT is ERC721URIStorage, Ownable {
   function withdraw() public onlyOwner {
     payable(owner()).transfer(address(this).balance);
   }
+
+  receive() external payable {}
 }
