@@ -4,6 +4,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
 contract NFT is ERC721URIStorage, Ownable {
   using Counters for Counters.Counter;
@@ -39,13 +40,13 @@ contract NFT is ERC721URIStorage, Ownable {
     listingPrice = _listingPrice;
   }
 
-  /// @notice Mint NFT
+  /// @notice Mint NFT and create market item for sale
   /// @dev Only owner can mint NFT
   function mintNFT(string memory _tokenURI) public onlyOwner {
     _tokenIds.increment();
 
     uint256 newTokenId = _tokenIds.current();
-    _mint(msg.sender, newTokenId);
+    _mint(address(this), newTokenId);
     _setTokenURI(newTokenId, _tokenURI);
 
     marketItems[newTokenId] = MarketItem(
@@ -53,6 +54,7 @@ contract NFT is ERC721URIStorage, Ownable {
       listingPrice,
       true
     );
+    emit MarketItemCreated(newTokenId, address(this), listingPrice);
   }
 
   /// @notice NFT owner can create market item for sale
@@ -60,6 +62,7 @@ contract NFT is ERC721URIStorage, Ownable {
   /// @param _tokenId NFT tokenId
   /// @param _price bid price
   function createMarketItem(uint _tokenId, uint256 _price) public {
+    console.log("NFT owner:", ownerOf(_tokenId));
     require(ownerOf(_tokenId) == msg.sender, "Only owner of NFT can create sale");
     
     marketItems[_tokenId] = MarketItem(
