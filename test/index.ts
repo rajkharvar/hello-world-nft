@@ -1,19 +1,31 @@
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { NFT } from "../typechain";
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("NFT", async () => {
+  const name: string = "Hello World";
+  const symbol: string = "HW";
+  let nft: NFT;
+  let signers: SignerWithAddress[];
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+  before(async () => {
+    const NFT = await ethers.getContractFactory("NFT");
+    nft = await NFT.deploy(name, symbol);
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    signers = await ethers.getSigners();
+  });
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
+  it("Name and symbol should be match with deployed NFT contract", async () => {
+    expect(await nft.name()).be.equal(name);
+    expect(await nft.symbol()).be.equal(symbol);
+  });
 
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+  it("Only owner can mint NFT", async () => {
+    nft = nft.connect(signers[1]);
+
+    await expect(
+      nft.mintNFT("https://jsonplaceholder.typicode.com/todos/1")
+    ).to.be.revertedWith("Ownable: caller is not the owner");
   });
 });

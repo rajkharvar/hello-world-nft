@@ -11,8 +11,8 @@ async function main() {
   const owner = await nft.owner();
   console.log("owner:", owner);
 
-  let txn = await nft.mintNFT(
-    "https://media.giphy.com/media/1gbqIc1fK8QgR3bHL7/giphy.gif"
+  await nft.mintNFT(
+    "https://ipfs.infura.io/ipfs/QmbsMrfTenjgkmn99WSpa7NsiP2vjaLtqvrzwaYoie9dPJ"
   );
 
   const tokenIds = await nft._tokenIds();
