@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NFT
+    network: mumbai
+    source:
+      address: "0x179248E4Ae3531A24589517C0E0123AB83cD64B5"
+      startBlock: 25850807
+      abi: NFT
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - MarketItemCreated
+        - MarketItemSale
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: NFT
+          file: ./abis/NFT.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts

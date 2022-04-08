@@ -1,0 +1,7 @@
+type NFT @entity {
+  id: ID!
+  tokenId: BigInt!
+  owner: Bytes!
+  onSale: Boolean!
+  price: BigInt!
+}
