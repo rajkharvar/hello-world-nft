@@ -10,13 +10,6 @@ async function main() {
 
   const owner = await nft.owner();
   console.log("owner:", owner);
-
-  await nft.mintNFT(
-    "https://ipfs.infura.io/ipfs/QmbsMrfTenjgkmn99WSpa7NsiP2vjaLtqvrzwaYoie9dPJ"
-  );
-
-  const tokenIds = await nft._tokenIds();
-  console.log("tokenIds:", tokenIds);
 }
 
 main().catch((error) => {
