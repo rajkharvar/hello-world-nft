@@ -20,6 +20,7 @@ export class NFT extends Entity {
     this.set("owner", Value.fromBytes(Bytes.empty()));
     this.set("onSale", Value.fromBoolean(false));
     this.set("price", Value.fromBigInt(BigInt.zero()));
+    this.set("seller", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -82,5 +83,14 @@ export class NFT extends Entity {
 
   set price(value: BigInt) {
     this.set("price", Value.fromBigInt(value));
+  }
+
+  get seller(): Bytes {
+    let value = this.get("seller");
+    return value!.toBytes();
+  }
+
+  set seller(value: Bytes) {
+    this.set("seller", Value.fromBytes(value));
   }
 }

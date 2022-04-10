@@ -4,4 +4,5 @@ type NFT @entity {
   owner: Bytes!
   onSale: Boolean!
   price: BigInt!
+  seller: Bytes!
 }

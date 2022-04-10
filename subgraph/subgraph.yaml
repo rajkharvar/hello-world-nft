@@ -14,11 +14,8 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Approval
-        - ApprovalForAll
         - MarketItemCreated
         - MarketItemSale
-        - OwnershipTransferred
         - Transfer
       abis:
         - name: NFT
@@ -26,4 +23,8 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+        - event: MarketItemCreated(indexed uint256,indexed address,uint256)
+          handler: handleMarketItemCreated
+        - event: MarketItemSale(indexed uint256,indexed address,indexed address)
+          handler: handleMarketItemSale
       file: ./src/mapping.ts
