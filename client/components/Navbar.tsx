@@ -37,8 +37,10 @@ const Navbar = () => {
         <Button variant="ghost" onClick={() => router.push("/explore")}>
           Explore
         </Button>
-        <Button variant="ghost">My Assets</Button>
-        <Button variant="solid" colorScheme="cyan">
+        <Button variant="ghost" onClick={() => router.push("/my-assets")}>
+          My Assets
+        </Button>
+        <Button variant="solid" colorScheme="teal">
           Connect Wallet
         </Button>
         <IconButton
