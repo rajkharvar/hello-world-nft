@@ -5,4 +5,5 @@ type NFT @entity {
   onSale: Boolean!
   price: BigInt!
   seller: Bytes!
+  tokenURI: String!
 }

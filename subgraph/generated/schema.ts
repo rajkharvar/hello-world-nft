@@ -21,6 +21,7 @@ export class NFT extends Entity {
     this.set("onSale", Value.fromBoolean(false));
     this.set("price", Value.fromBigInt(BigInt.zero()));
     this.set("seller", Value.fromBytes(Bytes.empty()));
+    this.set("tokenURI", Value.fromString(""));
   }
 
   save(): void {
@@ -92,5 +93,14 @@ export class NFT extends Entity {
 
   set seller(value: Bytes) {
     this.set("seller", Value.fromBytes(value));
+  }
+
+  get tokenURI(): string {
+    let value = this.get("tokenURI");
+    return value!.toString();
+  }
+
+  set tokenURI(value: string) {
+    this.set("tokenURI", Value.fromString(value));
   }
 }
