@@ -1,4 +1,4 @@
-import { Container, Heading } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Banner from "../components/Banner";
 

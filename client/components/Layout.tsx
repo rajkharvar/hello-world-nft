@@ -5,7 +5,7 @@ export interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = (props: LayoutProps): React.ReactNode => {
+const Layout = (props: LayoutProps): JSX.Element => {
   return (
     <>
       <Navbar />
