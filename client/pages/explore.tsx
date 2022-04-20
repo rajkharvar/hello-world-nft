@@ -1,13 +1,13 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 import { useQuery } from "@apollo/client";
-import { Badge, Box, Flex, Image, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
-import { ethers } from "ethers";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
+import Card from "../components/Card";
 import { FETCH_NFTS } from "../utils/queries";
 
-type NFT = {
+export type NFT = {
   id: string;
   onSale: boolean;
   owner: string;
@@ -54,52 +54,13 @@ const Explore: NextPage = () => {
   return (
     <>
       {nfts ? (
-        nfts.map((nft) => (
-          <Box
-            maxW="sm"
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-            key={nft.id}
-            m={4}
-          >
-            <Image src={nft.image} alt={nft.image} />
-
-            <Box p="6">
-              <Box display="flex" alignItems="baseline">
-                <Badge borderRadius="full" px="2" colorScheme="teal">
-                  New
-                </Badge>
-                <Box
-                  color="gray.500"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                  textTransform="uppercase"
-                  ml="2"
-                >
-                  {nft.title}
-                </Box>
-              </Box>
-
-              <Box
-                mt="1"
-                fontWeight="semibold"
-                as="h4"
-                lineHeight="tight"
-                isTruncated
-              >
-                {nft.description}
-              </Box>
-
-              <Box display="flex" mt="2" justifyContent="flex-end">
-                <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                  {ethers.utils.formatEther(nft.price)} ETH
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        ))
+        <Flex flexWrap="wrap">
+          {nfts.map((nft) => (
+            <>
+              <Card nft={nft} key={nft.id} />
+            </>
+          ))}
+        </Flex>
       ) : (
         <Text>No NFTs found</Text>
       )}
