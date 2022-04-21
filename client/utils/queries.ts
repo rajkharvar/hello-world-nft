@@ -14,4 +14,18 @@ const FETCH_NFTS = gql`
   }
 `;
 
-export { FETCH_NFTS };
+const FETCH_NFT = gql`
+  query ($id: String!) {
+    nft(id: $id) {
+      id
+      tokenId
+      owner
+      onSale
+      price
+      seller
+      tokenURI
+    }
+  }
+`;
+
+export { FETCH_NFTS, FETCH_NFT };

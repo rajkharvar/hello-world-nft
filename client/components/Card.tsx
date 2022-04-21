@@ -1,9 +1,11 @@
 import { Box, Badge, Image, Button, useColorModeValue } from "@chakra-ui/react";
 import { ethers } from "ethers";
+import { useRouter } from "next/router";
 import { FC } from "react";
 import { NFT } from "../pages/explore";
 
 const Card: FC<{ nft: NFT }> = ({ nft }) => {
+  const router = useRouter();
   const bgColor = useColorModeValue("gray.700", "gray.100");
 
   return (
@@ -53,7 +55,12 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
           <Button variant="outline" colorScheme="teal" disabled={!nft.onSale}>
             Buy Now
           </Button>
-          <Button colorScheme="teal">View Details</Button>
+          <Button
+            colorScheme="teal"
+            onClick={() => router.push(`/asset/${nft.id}`)}
+          >
+            View Details
+          </Button>
         </Box>
       </Box>
     </Box>
