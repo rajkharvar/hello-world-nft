@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import {
+  Button,
   Container,
   Flex,
   Heading,
@@ -10,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FETCH_NFT } from "../../utils/queries";
@@ -51,13 +53,25 @@ const Asset = () => {
   }
 
   return (
-    <Container m={0} p={0}>
+    <Container p={0} m={12}>
       {nft ? (
-        <HStack w="full">
+        <HStack w="full" spacing={4}>
           <Image src={nft.image} alt={nft.description} />
-          <VStack w="full">
-            <Heading>{nft.title}</Heading>
+          <VStack p={0} m={0}>
+            <Heading>
+              {nft.title} #{nft.id}
+            </Heading>
             <Text fontSize="sm">{nft.description}</Text>
+            <Text>Owned by {nft.owner}</Text>
+            <Text fontSize="md" m={0}>
+              Price
+            </Text>
+            <Text fontSize="lg">{ethers.utils.formatEther(nft.price)}</Text>
+            <HStack>
+              <Button variant="outline" colorScheme="twitter">
+                Buy Now
+              </Button>
+            </HStack>
           </VStack>
         </HStack>
       ) : (
