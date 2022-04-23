@@ -1,10 +1,11 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 import { useQuery } from "@apollo/client";
-import { Flex, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
+import CustomSpinner from "../components/CustomSpinner";
 import { FETCH_NFTS } from "../utils/queries";
 
 export type NFT = {
@@ -20,8 +21,9 @@ export type NFT = {
 };
 
 const Explore: NextPage = () => {
-  const { data, loading } = useQuery(FETCH_NFTS);
+  const { data } = useQuery(FETCH_NFTS);
   const [nfts, setNFTs] = useState<null | NFT[]>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchNFTMetadata(nfts: NFT[]) {
@@ -36,19 +38,20 @@ const Explore: NextPage = () => {
       );
 
       setNFTs(nftMetadata);
+      setIsLoading(false);
     }
 
-    if (data?.nfts.length) {
-      fetchNFTMetadata(data.nfts);
+    if (data) {
+      if (data?.nfts.length) {
+        fetchNFTMetadata(data.nfts);
+      } else {
+        setIsLoading(false);
+      }
     }
-  }, [data, loading]);
+  }, [data]);
 
-  if (loading) {
-    return (
-      <Flex w="full" h="full" justifyContent="center" alignItems="center">
-        <Spinner size="lg" />
-      </Flex>
-    );
+  if (isLoading) {
+    return <CustomSpinner />;
   }
 
   return (

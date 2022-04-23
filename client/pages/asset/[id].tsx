@@ -2,11 +2,9 @@ import { useQuery } from "@apollo/client";
 import {
   Button,
   Container,
-  Flex,
   Heading,
   HStack,
   Image,
-  Spinner,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -14,6 +12,7 @@ import axios from "axios";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import CustomSpinner from "../../components/CustomSpinner";
 import { FETCH_NFT } from "../../utils/queries";
 import { NFT } from "../explore";
 
@@ -45,11 +44,7 @@ const Asset = () => {
   }, [data]);
 
   if (isLoading) {
-    return (
-      <Flex w="full" height="full" justifyContent="center" alignItems="center">
-        <Spinner size="lg" />
-      </Flex>
-    );
+    return <CustomSpinner />;
   }
 
   return (
