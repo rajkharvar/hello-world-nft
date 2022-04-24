@@ -48,11 +48,11 @@ const Asset = () => {
   }
 
   return (
-    <Container p={0} m={12}>
+    <Container p={0} m={24}>
       {nft ? (
         <HStack w="full" spacing={4}>
           <Image src={nft.image} alt={nft.description} />
-          <VStack p={0} m={0}>
+          <VStack w="full" p={0} m={0}>
             <Heading>
               {nft.title} #{nft.id}
             </Heading>
