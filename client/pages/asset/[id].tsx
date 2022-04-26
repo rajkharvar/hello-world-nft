@@ -13,6 +13,8 @@ import axios from "axios";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Head from "next/head";
+
 import CustomSpinner from "../../components/CustomSpinner";
 import { FETCH_NFT } from "../../utils/queries";
 import { NFT } from "../explore";
@@ -51,46 +53,47 @@ const Asset = () => {
   return (
     <>
       {nft ? (
-        <HStack p={16} w="full" spacing={6}>
-          <Image src={nft.image} alt={nft.description} />
-          <VStack
-            w="full"
-            p={0}
-            m={0}
-            // justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            <Heading>
+        <>
+          <Head>
+            <title>
               {nft.title} #{nft.id}
-            </Heading>
-            <Text fontSize="md">{nft.description}</Text>
-            <HStack>
-              <Text>Owned by </Text>
-              <Text color="teal">
-                {nft.owner.substring(0, 6)}
-                ...
-                {nft.owner.substring(nft.owner.length - 4, nft.owner.length)}
-              </Text>
-            </HStack>
-            <HStack>
-              <Text fontSize="md" m={0}>
-                Price
-              </Text>
-              <Tag variant="subtle" colorScheme="cyan">
-                {ethers.utils.formatEther(nft.price)}
-              </Tag>
-            </HStack>
-            <HStack>
-              <Button
-                variant="outline"
-                colorScheme="twitter"
-                disabled={!nft.onSale}
-              >
-                Buy Now
-              </Button>
-            </HStack>
-          </VStack>
-        </HStack>
+            </title>
+          </Head>
+          <HStack p={16} w="full" spacing={6}>
+            <Image src={nft.image} alt={nft.description} />
+            <VStack w="full" p={0} m={0} alignItems="flex-start">
+              <Heading>
+                {nft.title} #{nft.id}
+              </Heading>
+              <Text fontSize="md">{nft.description}</Text>
+              <HStack>
+                <Text>Owned by </Text>
+                <Text color="teal">
+                  {nft.owner.substring(0, 6)}
+                  ...
+                  {nft.owner.substring(nft.owner.length - 4, nft.owner.length)}
+                </Text>
+              </HStack>
+              <HStack>
+                <Text fontSize="md" m={0}>
+                  Price
+                </Text>
+                <Tag variant="subtle" colorScheme="cyan">
+                  {ethers.utils.formatEther(nft.price)}
+                </Tag>
+              </HStack>
+              <HStack>
+                <Button
+                  variant="outline"
+                  colorScheme="twitter"
+                  disabled={!nft.onSale}
+                >
+                  Buy Now
+                </Button>
+              </HStack>
+            </VStack>
+          </HStack>
+        </>
       ) : (
         <Center mt={4}>
           <Text fontSize="3xl">No NFT found with id {id}</Text>
