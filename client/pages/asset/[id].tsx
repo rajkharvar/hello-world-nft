@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client";
 import {
   Button,
-  Container,
+  Center,
   Heading,
   HStack,
   Image,
+  Tag,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -48,31 +49,54 @@ const Asset = () => {
   }
 
   return (
-    <Container p={0} m={24}>
+    <>
       {nft ? (
-        <HStack w="full" spacing={4}>
+        <HStack p={16} w="full" spacing={6}>
           <Image src={nft.image} alt={nft.description} />
-          <VStack w="full" p={0} m={0}>
+          <VStack
+            w="full"
+            p={0}
+            m={0}
+            // justifyContent="flex-start"
+            alignItems="flex-start"
+          >
             <Heading>
               {nft.title} #{nft.id}
             </Heading>
-            <Text fontSize="sm">{nft.description}</Text>
-            <Text>Owned by {nft.owner}</Text>
-            <Text fontSize="md" m={0}>
-              Price
-            </Text>
-            <Text fontSize="lg">{ethers.utils.formatEther(nft.price)}</Text>
+            <Text fontSize="md">{nft.description}</Text>
             <HStack>
-              <Button variant="outline" colorScheme="twitter">
+              <Text>Owned by </Text>
+              <Text color="teal">
+                {nft.owner.substring(0, 6)}
+                ...
+                {nft.owner.substring(nft.owner.length - 4, nft.owner.length)}
+              </Text>
+            </HStack>
+            <HStack>
+              <Text fontSize="md" m={0}>
+                Price
+              </Text>
+              <Tag variant="subtle" colorScheme="cyan">
+                {ethers.utils.formatEther(nft.price)}
+              </Tag>
+            </HStack>
+            <HStack>
+              <Button
+                variant="outline"
+                colorScheme="twitter"
+                disabled={!nft.onSale}
+              >
                 Buy Now
               </Button>
             </HStack>
           </VStack>
         </HStack>
       ) : (
-        <Text>No NFT fouund with id {id}</Text>
+        <Center mt={4}>
+          <Text fontSize="3xl">No NFT found with id {id}</Text>
+        </Center>
       )}
-    </Container>
+    </>
   );
 };
 

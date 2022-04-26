@@ -8,7 +8,7 @@ export interface LayoutProps {
 
 const Layout = (props: LayoutProps): JSX.Element => {
   return (
-    <Container maxW="full" minH="100vh" m={0} p={0}>
+    <Container maxW="100vw" minH="100vh" m={0} p={0}>
       <Navbar />
       {props.children}
     </Container>

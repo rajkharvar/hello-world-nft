@@ -7,16 +7,14 @@ import {
   IconButton,
   useColorMode,
   useColorModeValue,
-  Text,
 } from "@chakra-ui/react";
 import { useWeb3React } from "@web3-react/core";
 import { utils } from "ethers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Blockies from "react-blockies";
-
 import { injected, isAuthorized } from "../utils/connector";
 import { maticMumbaiInfo, MATIC_MUMBAI_CHAIN_ID } from "../utils/constants";
+import AccountDetails from "./AccountDetails";
 
 const Navbar = () => {
   const { toggleColorMode, colorMode } = useColorMode();
@@ -93,15 +91,7 @@ const Navbar = () => {
         <Button variant="ghost" onClick={() => router.push("/my-assets")}>
           My Assets
         </Button>
-        {authorized && account && (
-          <>
-            <Blockies seed={account} size={10} scale={3} />
-            <Text colorScheme="teal">
-              {account.substring(0, 4)}...
-              {account.substring(account.length - 4)}
-            </Text>
-          </>
-        )}
+        {authorized && account && <AccountDetails account={account} />}
         {authorized && chainId !== MATIC_MUMBAI_CHAIN_ID && (
           <Button variant="outline" colorScheme="red" onClick={switchNetwork}>
             Switch Network
