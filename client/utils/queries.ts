@@ -28,4 +28,18 @@ const FETCH_NFT = gql`
   }
 `;
 
-export { FETCH_NFTS, FETCH_NFT };
+const FETCH_USER_NFTS = gql`
+  query ($owner: String!) {
+    nfts(where: { owner: $owner }) {
+      id
+      tokenId
+      owner
+      onSale
+      price
+      seller
+      tokenURI
+    }
+  }
+`;
+
+export { FETCH_NFTS, FETCH_NFT, FETCH_USER_NFTS };

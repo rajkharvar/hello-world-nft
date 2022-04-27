@@ -9,15 +9,48 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { FaEthereum } from "react-icons/fa";
+
 import { NFT } from "../pages/explore";
 import { getTruncatedAddress } from "../utils/address";
+import NFTAbi from "../abi/NFT.json";
+import { CONTRACT_ADDRESS } from "../utils/constants";
 
 const Card: FC<{ nft: NFT }> = ({ nft }) => {
   const router = useRouter();
+  const { account } = useWeb3React();
+
+  const getContractInstance = () => {
+    if ((window as any).ethereum && account) {
+      const provider = new ethers.providers.Web3Provider(
+        (window as any).ethereum
+      );
+      const signer = provider.getSigner();
+      const NFT = new ethers.Contract(CONTRACT_ADDRESS, NFTAbi, signer);
+      return NFT;
+    }
+  };
+
+  const createMarketSale = async () => {
+    try {
+      const nftInstance = getContractInstance();
+      if (nftInstance) {
+        const tx = await nftInstance.createMarketSale(nft.tokenId, {
+          value: nft.price,
+        });
+        console.log("Waiting for user approval for tx");
+        await tx.wait();
+        console.log("Tx successfull");
+      }
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
+  };
 
   return (
     <Box
@@ -32,18 +65,22 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">
-          <Badge borderRadius="full" px="2" colorScheme="teal">
-            New
-          </Badge>
           <Box
+            as="h3"
             color="gray.500"
             fontWeight="semibold"
             letterSpacing="wide"
-            fontSize="xs"
             textTransform="uppercase"
-            ml="2"
           >
-            {nft.title} #{nft.id}
+            {nft.title}#{nft.id}
+            <Badge
+              variant="outline"
+              colorScheme={nft.onSale ? "teal" : "red"}
+              ml={4}
+              p={1}
+            >
+              {nft.onSale ? "On Sale" : "Sold"}
+            </Badge>
           </Box>
         </Box>
 
@@ -70,7 +107,12 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
           </Box>
         </Flex>
         <Box display="flex" justifyContent="space-between">
-          <Button variant="outline" colorScheme="teal" disabled={!nft.onSale}>
+          <Button
+            variant="outline"
+            colorScheme="teal"
+            disabled={!nft.onSale || !account}
+            onClick={createMarketSale}
+          >
             Buy Now
           </Button>
           <Button

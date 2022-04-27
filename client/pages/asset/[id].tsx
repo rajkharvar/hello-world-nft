@@ -122,7 +122,7 @@ const Asset = () => {
                 <HStack>
                   <Button
                     variant="outline"
-                    colorScheme="twitter"
+                    colorScheme="teal"
                     disabled={!nft.onSale || !account}
                   >
                     Buy Now
