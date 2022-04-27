@@ -1,12 +1,23 @@
-import { Box, Badge, Image, Button, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Badge,
+  Image,
+  Button,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { FC } from "react";
+import { FaEthereum } from "react-icons/fa";
 import { NFT } from "../pages/explore";
+import { getTruncatedAddress } from "../utils/address";
 
 const Card: FC<{ nft: NFT }> = ({ nft }) => {
   const router = useRouter();
-  const bgColor = useColorModeValue("gray.700", "gray.100");
 
   return (
     <Box
@@ -32,7 +43,7 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
             textTransform="uppercase"
             ml="2"
           >
-            {nft.title}
+            {nft.title} #{nft.id}
           </Box>
         </Box>
 
@@ -46,11 +57,18 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
           {nft.description}
         </Box>
 
-        <Box display="flex" mt="2" justifyContent="flex-end">
-          <Box as="span" ml="2" color={bgColor} fontSize="sm">
-            {ethers.utils.formatEther(nft.price)} ETH
+        <Flex alignItems="center" justifyContent="space-between">
+          <Box>
+            <Text color="teal">{getTruncatedAddress(nft.owner)}</Text>
           </Box>
-        </Box>
+
+          <Box display="flex" mt="2" justifyContent="flex-end">
+            <Tag my={4} variant="outline">
+              <TagLabel>{ethers.utils.formatEther(nft.price)}</TagLabel>
+              <TagRightIcon as={FaEthereum} />
+            </Tag>
+          </Box>
+        </Flex>
         <Box display="flex" justifyContent="space-between">
           <Button variant="outline" colorScheme="teal" disabled={!nft.onSale}>
             Buy Now

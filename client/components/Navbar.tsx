@@ -24,7 +24,12 @@ const Navbar = () => {
   const [authorized, setAuthorized] = useState<boolean>(false);
 
   useEffect(() => {
-    activate(injected);
+    try {
+      activate(injected);
+    } catch (error) {
+      console.log("error occured while activating");
+      console.log(error);
+    }
     isAuthorized().then((isAuthorized) => {
       setAuthorized(isAuthorized);
     });
