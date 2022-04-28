@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import {
-  Button,
   Center,
   Heading,
   HStack,
@@ -23,14 +22,13 @@ import { FaEthereum } from "react-icons/fa";
 import CustomSpinner from "../../components/CustomSpinner";
 import { FETCH_NFT } from "../../utils/queries";
 import { NFT } from "../explore";
-import { useWeb3React } from "@web3-react/core";
+import BuyButton from "../../components/BuyButton";
 
 const Asset = () => {
   const router = useRouter();
   const { id } = router.query;
   const [isLoading, setIsLoading] = useState(true);
   const [nft, setNft] = useState<null | NFT>(null);
-  const { account } = useWeb3React();
 
   const { data } = useQuery(FETCH_NFT, {
     variables: {
@@ -42,14 +40,16 @@ const Asset = () => {
     const fetchData = async (nft: NFT) => {
       const res = await axios.get(nft.tokenURI);
       setNft({ ...res.data, ...nft });
+      setIsLoading(false);
     };
 
     if (data) {
       console.log(data);
       if (data?.nft) {
         fetchData(data.nft);
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
   }, [data]);
 
@@ -120,13 +120,7 @@ const Asset = () => {
                   </Tag>
                 </HStack>
                 <HStack>
-                  <Button
-                    variant="outline"
-                    colorScheme="teal"
-                    disabled={!nft.onSale || !account}
-                  >
-                    Buy Now
-                  </Button>
+                  <BuyButton nft={nft} />
                 </HStack>
               </VStack>
             </Flex>

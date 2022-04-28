@@ -62,7 +62,6 @@ const Asset: FC<{ nft: NFT }> = ({ nft }) => {
           description: "Successfully listed NFT for sale",
           isClosable: true,
           status: "success",
-          duration: 3000,
         });
         onClose();
       }
