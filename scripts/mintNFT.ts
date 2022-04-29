@@ -10,7 +10,7 @@ const NFT_CONTRACT: string = "0x179248E4Ae3531A24589517C0E0123AB83cD64B5";
 
 async function uploadFile() {
   try {
-    const file = fs.readFileSync("assets/js.png");
+    const file = fs.readFileSync("assets/go.png");
     const added = await client.add(file);
     const url = `https://ipfs.infura.io/ipfs/${added.path}`;
     console.log("Image URL:", url);
@@ -25,8 +25,8 @@ async function uploadMetadata() {
     const imageURL = await uploadFile();
 
     const data = JSON.stringify({
-      title: "Javascript",
-      description: "Hello World in Javascript",
+      title: "Go",
+      description: "Hello World in Go",
       image: imageURL,
     });
 
