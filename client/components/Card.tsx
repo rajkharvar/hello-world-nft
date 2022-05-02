@@ -1,6 +1,5 @@
 import {
   Box,
-  Badge,
   Image,
   Button,
   Tag,
@@ -30,7 +29,7 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
       key={nft.id}
       m={4}
     >
-      <Image src={nft.image} alt={nft.title} />
+      <Image h="40" src={nft.image} alt={nft.title} />
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">
@@ -42,14 +41,9 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
             textTransform="uppercase"
           >
             {nft.title}#{nft.id}
-            <Badge
-              variant="outline"
-              colorScheme={nft.onSale ? "teal" : "red"}
-              ml={4}
-              p={1}
-            >
+            <Tag colorScheme={nft.onSale ? "teal" : "red"} ml={4}>
               {nft.onSale ? "On Sale" : "Sold"}
-            </Badge>
+            </Tag>
           </Box>
         </Box>
 
@@ -64,8 +58,11 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
         </Box>
 
         <Flex alignItems="center" justifyContent="space-between">
-          <Box>
-            <Text color="teal">{getTruncatedAddress(nft.owner)}</Text>
+          <Box display="flex">
+            <Text>Owned by</Text>
+            <Text ml={1} color="blue.500">
+              {getTruncatedAddress(nft.owner)}
+            </Text>
           </Box>
 
           <Box display="flex" mt="2" justifyContent="flex-end">

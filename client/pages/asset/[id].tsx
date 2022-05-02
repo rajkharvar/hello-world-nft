@@ -101,7 +101,7 @@ const Asset = () => {
                 <Text fontSize="md">{nft.description}</Text>
                 <HStack>
                   <Text>Owned by </Text>
-                  <Text color="teal">
+                  <Text color="blue.500">
                     {nft.owner.substring(0, 6)}
                     ...
                     {nft.owner.substring(
