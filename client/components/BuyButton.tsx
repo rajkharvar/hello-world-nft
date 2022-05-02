@@ -11,6 +11,14 @@ const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
   const { account } = useWeb3React();
   const toast = useToast();
 
+  const handleTxRejected = () => {
+    toast({
+      status: "error",
+      title: "Transaction rejected",
+      isClosable: true,
+    });
+  };
+
   const getContractInstance = () => {
     if ((window as any).ethereum && account) {
       const provider = new ethers.providers.Web3Provider(
@@ -40,9 +48,13 @@ const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
           status: "success",
         });
       }
-    } catch (error) {
-      console.log("Error occured while buying NFT");
-      console.log(error);
+    } catch (error: any) {
+      if (error.code === 4001) {
+        handleTxRejected();
+      } else {
+        console.log("Error occured while buying NFT");
+        console.log(error);
+      }
     } finally {
       setIsLoading(false);
     }
