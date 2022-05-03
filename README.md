@@ -1,46 +1,80 @@
-# Advanced Sample Hardhat Project
+# Hello World NFT 💻 Marketplace
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+Discover, collect and sell finest Hello World NFTs
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## Working
 
-Try running some of the following tasks:
+1. Admin mint new NFT and put it on marketplace with listing price of 0.1 ETH.
+2. User can claim the NFT by paying listing price.
+3. User can place NFT that they owns on sale by demanding expected price.
+4. User can claim any other user NFT by paying bid price.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+## Tech Stack
+
+**Contracts:** Solidity
+
+**Client:** Nextjs, ChakraUI, Ethers
+
+**Indexer:** TheGraph
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/rajkharvar/hello-world-nft.git
 ```
 
-# Etherscan verification
+Go to the project directory
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.ts
+```bash
+  cd hello-world-nft
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+Install dependencies
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+```bash
+  npm install
 ```
 
-# Performance optimizations
+Running contracts test
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+```
+    npm test
+```
+
+To start client dev server
+
+```bash
+    cd client
+    npm install
+    npm run dev
+```
+
+Deploying subgraph to hosted service
+
+```bash
+    cd subgraph
+    npm install
+    npm run deploy
+```
+
+Note⚠: Before deploying subgraph make sure to update `deploy` script in `package.json`. Changing `rajkharvar/hello-world-nft` with `YOUR_USERNAME/PROJECT_NAME`.
+
+## Environment Variables
+
+To deploy the contracts, you will need to add the following environment variables to your .env file
+
+`PRIVATE_KEY`
+
+`MUMBAI_URL`
+
+For client, you will need to add the following environment variables.
+
+`CONTRACT_ADDRESS`
+
+## 🔗 Links
+
+[Contract](https://mumbai.polygonscan.com/address/0x179248E4Ae3531A24589517C0E0123AB83cD64B5)
+
+[Graph Endpoint](https://thegraph.com/hosted-service/subgraph/rajkharvar/hello-world-nft)
