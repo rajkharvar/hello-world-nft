@@ -59,7 +59,7 @@ Deploying subgraph to hosted service
     npm run deploy
 ```
 
-Note⚠: Before deploying subgraph make sure to update `deploy` script in `package.json`. Changing `rajkharvar/hello-world-nft` with `YOUR_USERNAME/PROJECT_NAME`.
+Note⚠: Before deploying subgraph make sure to update `deploy` script in `package.json`. Update `rajkharvar/hello-world-nft` with `YOUR_USERNAME/PROJECT_NAME`.
 
 ## Environment Variables
 
