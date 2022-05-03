@@ -58,7 +58,7 @@ const Explore: NextPage = () => {
   return (
     <>
       {nfts ? (
-        <Flex flexWrap="wrap">
+        <Flex flexWrap="wrap" justifyContent="space-around">
           {nfts.map((nft) => (
             <Card nft={nft} key={nft.id} />
           ))}
