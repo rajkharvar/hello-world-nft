@@ -17,11 +17,10 @@ const Banner = () => {
     <Flex py={24} m="auto" maxW="3xl">
       <VStack alignItems="flex-start" spacing={8}>
         <Heading size="xl">
-          Discover, collection and sell finest Hello World 💻 NFTs
+          Discover, collect and sell finest Hello World 💻 NFTs
         </Heading>
         <Text fontSize="xl">
-          Hello World NFTs action is first code NFT marketplace on polygon
-          mumbai chain
+          Hello World NFTs marketplace is currently live on polygon mumbai chain
         </Text>
         <HStack spacing={8}>
           <Button
