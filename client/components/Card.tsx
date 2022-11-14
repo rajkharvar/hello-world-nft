@@ -29,7 +29,7 @@ const Card: FC<{ nft: NFT }> = ({ nft }) => {
       key={nft.id}
       m={4}
     >
-      <Image h="40" src={nft.image} alt={nft.title} />
+      <Image h="40" src={nft.image.replace(".infura", "")} alt={nft.title} />
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">
