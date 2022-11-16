@@ -130,7 +130,7 @@ const Asset: FC<{ nft: NFT }> = ({ nft }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Image src={nft.image} alt={nft.title} />
+      <Image src={nft.image.replace(".infura", "")} alt={nft.title} />
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">

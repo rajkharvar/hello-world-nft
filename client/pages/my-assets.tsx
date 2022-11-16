@@ -29,7 +29,8 @@ const MyAssets = () => {
     async function fetchNFTMetadata(nfts: NFT[]) {
       const nftMetadata = await Promise.all(
         nfts.map(async (nft) => {
-          const metadata = await axios.get(nft.tokenURI);
+          const url = nft.tokenURI.replace(".infura", "");
+          const metadata = await axios.get(url);
           return {
             ...nft,
             ...metadata.data,

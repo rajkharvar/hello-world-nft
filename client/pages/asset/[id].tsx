@@ -38,7 +38,8 @@ const Asset = () => {
 
   useEffect(() => {
     const fetchData = async (nft: NFT) => {
-      const res = await axios.get(nft.tokenURI);
+      const url = nft.tokenURI.replace(".infura", "");
+      const res = await axios.get(url);
       setNft({ ...res.data, ...nft });
       setIsLoading(false);
     };
@@ -81,7 +82,7 @@ const Asset = () => {
               <Image
                 maxW="768px"
                 objectFit="cover"
-                src={nft.image}
+                src={nft.image.replace(".infura", "")}
                 alt={nft.description}
               />
               <VStack
