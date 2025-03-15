@@ -21,6 +21,7 @@ export function handleTransfer(event: Transfer): void {
     nft.owner = event.params.to;
     nft.price = marketItem.value1;
     nft.onSale = marketItem.value2;
+    nft.seller = event.params.from;
     nft.tokenURI = contract.tokenURI(event.params.tokenId);
     nft.save();
   } else {

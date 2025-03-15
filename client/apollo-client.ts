@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://api.thegraph.com/subgraphs/name/rajkharvar/hello-world-nft",
+  uri: "https://api.studio.thegraph.com/query/106868/hello-world-nft/version/latest",
   cache: new InMemoryCache(),
 });
 

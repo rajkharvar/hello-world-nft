@@ -8,68 +8,21 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useWeb3React } from "@web3-react/core";
-import { utils } from "ethers";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { injected, isAuthorized } from "../utils/connector";
-import { maticMumbaiInfo, MATIC_MUMBAI_CHAIN_ID } from "../utils/constants";
+import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
+import { HOLESKY_CHAIN_ID } from "../utils/constants";
 import AccountDetails from "./AccountDetails";
 
 const Navbar = () => {
   const { toggleColorMode, colorMode } = useColorMode();
   const bgColor = useColorModeValue("gray.100", "whiteAlpha.100");
   const router = useRouter();
-  const { activate, account, chainId } = useWeb3React();
-  const [authorized, setAuthorized] = useState<boolean>(false);
+  const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
-  useEffect(() => {
-    try {
-      activate(injected);
-    } catch (error) {
-      console.log("error occured while activating");
-      console.log(error);
-    }
-    isAuthorized().then((isAuthorized) => {
-      setAuthorized(isAuthorized);
-    });
-  }, []);
-
-  const switchNetwork = async () => {
-    if ((window as any).ethereum) {
-      try {
-        await (window as any).ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: utils.hexValue(MATIC_MUMBAI_CHAIN_ID) }],
-        });
-      } catch (switchError) {
-        if ((switchError as any)?.code === 4902) {
-          try {
-            await (window as any).ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [
-                {
-                  chainId: utils.hexValue(MATIC_MUMBAI_CHAIN_ID),
-                  rpcUrls: maticMumbaiInfo.rpcUrls,
-                  chainName: maticMumbaiInfo.chainName,
-                  blockExplorerUrls: maticMumbaiInfo.blockExplorerUrls,
-                  nativeCurrency: {
-                    ...maticMumbaiInfo.nativeCurrency,
-                  },
-                },
-              ],
-            });
-          } catch (addError) {
-            console.log("addError", addError);
-          }
-        }
-      }
-    }
-  };
-
-  // authorized && account -> Connected to correct chain
-  // authorized && !account -> Connected to wrong chain
-  // error -> isInstance of NoEthereumProviderError -> Show toast to install metamask
+  const isCorrectNetwork = chain?.id === HOLESKY_CHAIN_ID;
 
   return (
     <Flex
@@ -96,21 +49,19 @@ const Navbar = () => {
         <Button variant="ghost" onClick={() => router.push("/my-assets")}>
           My Assets
         </Button>
-        {authorized && account && <AccountDetails account={account} />}
-        {authorized && chainId !== MATIC_MUMBAI_CHAIN_ID && (
-          <Button variant="outline" colorScheme="red" onClick={switchNetwork}>
+        {/* {isConnected && isCorrectNetwork && address && (
+          <AccountDetails account={address} />
+        )} */}
+        {isConnected && !isCorrectNetwork && (
+          <Button
+            variant="outline"
+            colorScheme="red"
+            onClick={() => switchNetwork?.(HOLESKY_CHAIN_ID)}
+          >
             Switch Network
           </Button>
         )}
-        {!authorized && (
-          <Button
-            variant="solid"
-            colorScheme="teal"
-            onClick={() => activate(injected)}
-          >
-            Connect Wallet 🦊
-          </Button>
-        )}
+        <ConnectButton />
         <IconButton
           aria-label="Toggle theme"
           icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}

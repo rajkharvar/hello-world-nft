@@ -16,11 +16,11 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/react";
-import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import { FaEthereum } from "react-icons/fa";
 import { ethers } from "ethers";
+import { useAccount, useSigner } from "wagmi";
 
 import NFTAbi from "../abi/NFT.json";
 import { NFT } from "../pages/explore";
@@ -31,7 +31,8 @@ const Asset: FC<{ nft: NFT }> = ({ nft }) => {
   const [isTxPending, setIsTxPending] = useState<boolean>(false);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { account } = useWeb3React();
+  const { address } = useAccount();
+  const { data: signer } = useSigner();
   const router = useRouter();
   const toast = useToast();
 
@@ -44,11 +45,7 @@ const Asset: FC<{ nft: NFT }> = ({ nft }) => {
   };
 
   const getContractInstance = () => {
-    if ((window as any).ethereum && account) {
-      const provider = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      );
-      const signer = provider.getSigner();
+    if (signer) {
       const NFT = new ethers.Contract(CONTRACT_ADDRESS, NFTAbi, signer);
       return NFT;
     }

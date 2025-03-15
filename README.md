@@ -75,6 +75,6 @@ For client, you will need to add the following environment variables.
 
 ## 🔗 Links
 
-[Contract](https://mumbai.polygonscan.com/address/0x179248E4Ae3531A24589517C0E0123AB83cD64B5)
+[Contract](https://holesky.etherscan.io/address/0x0cD252390E7e46D7Ecf48D225fBB56D8fBd6Faf1)
 
-[Graph Endpoint](https://thegraph.com/hosted-service/subgraph/rajkharvar/hello-world-nft)
+[Graph Endpoint](https://api.studio.thegraph.com/query/106868/hello-world-nft/version/latest)

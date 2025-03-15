@@ -1,14 +1,16 @@
 import { Button, useToast } from "@chakra-ui/react";
-import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { FC, useState } from "react";
+import { useAccount, useProvider, useSigner } from "wagmi";
 import { NFT } from "../pages/explore";
 import { CONTRACT_ADDRESS } from "../utils/constants";
 import NFTAbi from "../abi/NFT.json";
 
 const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { account } = useWeb3React();
+  const { address } = useAccount();
+  const { data: signer } = useSigner();
+  const provider = useProvider();
   const toast = useToast();
 
   const handleTxRejected = () => {
@@ -20,11 +22,7 @@ const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
   };
 
   const getContractInstance = () => {
-    if ((window as any).ethereum && account) {
-      const provider = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      );
-      const signer = provider.getSigner();
+    if (signer) {
       const nftInstance = new ethers.Contract(CONTRACT_ADDRESS, NFTAbi, signer);
       return nftInstance;
     }
@@ -63,7 +61,7 @@ const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
   return (
     <Button
       colorScheme="teal"
-      disabled={!nft.onSale || !account}
+      disabled={!nft.onSale || !address}
       isLoading={isLoading}
       onClick={createMarketSale}
       variant="outline"

@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { Center, Text } from "@chakra-ui/react";
-import { useWeb3React } from "@web3-react/core";
+import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,20 +10,20 @@ import { FETCH_USER_NFTS } from "../utils/queries";
 import Asset from "../components/Asset";
 
 const MyAssets = () => {
-  const { account } = useWeb3React();
+  const { address, isConnected } = useAccount();
   const [nfts, setNFTs] = useState<null | NFT[]>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fetchUserNFT, { data }] = useLazyQuery(FETCH_USER_NFTS);
 
   useEffect(() => {
-    if (account) {
+    if (address) {
       fetchUserNFT({
         variables: {
-          owner: account,
+          owner: address,
         },
       });
     }
-  }, []);
+  }, [address]);
 
   useEffect(() => {
     async function fetchNFTMetadata(nfts: NFT[]) {
@@ -51,7 +51,7 @@ const MyAssets = () => {
     }
   }, [data]);
 
-  if (!account) {
+  if (!isConnected) {
     return (
       <Center mt={4}>
         <Text fontSize="3xl">Please connect your wallet!</Text>
@@ -69,7 +69,7 @@ const MyAssets = () => {
         <Text fontSize="3xl">You have {nfts.length} NFT</Text>
       </Center>
       {nfts.map((nft: NFT) => (
-        <Asset nft={nft} />
+        <Asset key={nft.id} nft={nft} />
       ))}
     </>
   ) : (

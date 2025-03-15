@@ -20,7 +20,7 @@ const Banner = () => {
           Discover, collect and sell finest Hello World 💻 NFTs
         </Heading>
         <Text fontSize="xl">
-          Hello World NFTs marketplace is currently live on polygon mumbai chain
+          Hello World NFTs marketplace is currently live on Holeksy
         </Text>
         <HStack spacing={8}>
           <Button
