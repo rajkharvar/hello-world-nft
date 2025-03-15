@@ -1,7 +1,7 @@
 import { Button, useToast } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { FC, useState } from "react";
-import { useAccount, useProvider, useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import { NFT } from "../pages/explore";
 import { CONTRACT_ADDRESS } from "../utils/constants";
 import NFTAbi from "../abi/NFT.json";
@@ -10,7 +10,6 @@ const BuyButton: FC<{ nft: NFT }> = ({ nft }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
   const { data: signer } = useSigner();
-  const provider = useProvider();
   const toast = useToast();
 
   const handleTxRejected = () => {

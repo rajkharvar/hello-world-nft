@@ -12,13 +12,13 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useRouter } from "next/router";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { HOLESKY_CHAIN_ID } from "../utils/constants";
-import AccountDetails from "./AccountDetails";
+// import AccountDetails from "./AccountDetails";
 
 const Navbar = () => {
   const { toggleColorMode, colorMode } = useColorMode();
   const bgColor = useColorModeValue("gray.100", "whiteAlpha.100");
   const router = useRouter();
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
 
